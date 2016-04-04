@@ -1,0 +1,25 @@
+{
+  "name": "siscomgex",
+  "version": "1.0.0",
+  "description": "Grunt watching to make the livereload",
+  "author": "Marcos Rosada <marcosfrosada@gmail.com>",
+  "license": "ISC",
+  "keywords": [
+    "AngularJS",
+    "javascript",
+    "express",
+    "node"
+  ],
+  "devDependencies": {
+    "grunt-cli": "^1.1.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-concat": "^1.0.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^1.0.1",
+    "grunt-contrib-htmlmin": "^1.2.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-express": "^1.4.1"
+  }
+}
