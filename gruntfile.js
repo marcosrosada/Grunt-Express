@@ -41,4 +41,5 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-remove-logging-calls');
 
 	grunt.registerTask('server', ['express', 'watch']);
+	grunt.registerTask('prod', ['atr', 'mcda']);
 };
