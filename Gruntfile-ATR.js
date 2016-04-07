@@ -82,7 +82,7 @@ module.exports = function (grunt) {
 		    	dest: path_atr_webapp + 'js/scripts.port.js',
 		    	replacements: [{
 		      		from: ':8080',
-		      		to: ':8080'
+		      		to: ''
 		    	}]
 		  	}
 		},
