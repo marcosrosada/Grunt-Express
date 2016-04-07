@@ -20,8 +20,8 @@ module.exports = function(grunt) {
 				options: {
 					port: 3000,
 					hostname: 'localhost',
-					bases: [ path_atr_webdev, path_mcda_webdev ],
-					//bases: [ path_atr_webapp, path_mcda_webapp ],
+					//bases: [ path_atr_webdev, path_mcda_webdev ],
+					bases: [ path_atr_webapp, path_mcda_webapp ],
 					livereload: true
 				}
 			}
@@ -38,6 +38,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-text-replace');
+	grunt.loadNpmTasks('grunt-remove-logging-calls');
 
 	grunt.registerTask('server', ['express', 'watch']);
 };
