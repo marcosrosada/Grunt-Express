@@ -1,13 +1,14 @@
 {
   "name": "siscomgex",
   "version": "1.0.0",
-  "description": "Grunt watching to make the livereload",
+  "description": "Controle dos plugins do Grunt em devDependencies",
   "author": "Marcos Rosada <marcosfrosada@gmail.com>",
   "license": "ISC",
   "keywords": [
     "AngularJS",
     "javascript",
     "express",
+    "watch",
     "node"
   ],
   "devDependencies": {
@@ -20,6 +21,7 @@
     "grunt-contrib-jshint": "^1.0.0",
     "grunt-contrib-uglify": "^1.0.1",
     "grunt-contrib-watch": "^1.0.0",
-    "grunt-express": "^1.4.1"
+    "grunt-express": "^1.4.1",
+    "grunt-text-replace": "^0.4.0"
   }
 }
