@@ -9,13 +9,18 @@ module.exports = function (grunt) {
 	        atrAll: path_atr_webapp,
 	        atrTemp: [ 
         			path_atr_webapp + 'js/scripts.js', 
+        			path_atr_webapp + 'js/scripts.port.js', 
         			path_atr_webapp + 'js/scripts.min.js', 
         			path_atr_webapp + 'js/libs.min.js'
 				]
 	    },
 		jshint: {
         	atrFiles: {
-        		src: path_atr_webdev + 'js/modules/*.js'
+        		src: [
+        			path_atr_webdev + 'js/modules/**/*.js',
+        			path_atr_webdev + 'js/controllers/**/*.js',
+        			path_atr_webdev + 'js/services/**/*.js'
+        		]
         	}
 	    },
 	    concat: {
@@ -34,7 +39,6 @@ module.exports = function (grunt) {
 	        atrLibs: {
             	src: [ 
             			path_atr_webdev + 'js/Chart.js',		
-		
 						path_atr_webdev + 'js/jquery/jquery.min.js',
 						path_atr_webdev + 'js/jquery/jquery-ui.min.js',
 						
@@ -72,12 +76,25 @@ module.exports = function (grunt) {
 	            dest: path_atr_webapp + 'js/app.min.js'
 	        }
 	    },
+		replace: {
+		  	atrPort: {
+		    	src: path_atr_webapp + 'js/scripts.js',
+		    	dest: path_atr_webapp + 'js/scripts.port.js',
+		    	replacements: [{
+		      		from: ':8080',
+		      		to: ':8080'
+		    	}]
+		  	}
+		},
 	    uglify: {
 	    	options: {
-		      mangle: false
+		      mangle: false,
+		      compress: {
+		        drop_console: false
+		      }
 		    },
 	    	atrFiles: {
-	            src: [ path_atr_webapp + 'js/scripts.js'],
+	            src: path_atr_webapp + 'js/scripts.port.js',
 	            dest: path_atr_webapp + 'js/scripts.min.js'
 	        }
 	    },
@@ -116,5 +133,5 @@ module.exports = function (grunt) {
 	    }
 	});
 
-	grunt.registerTask('atr', ['clean:atrAll', 'jshint:atrFiles', 'concat:atrScripts', 'uglify:atrFiles', 'concat:atrLibs', 'concat:atrAll', 'cssmin:atrFiles', 'htmlmin:atrFiles', 'copy:atrIndex', 'copy:atrImages', 'clean:atrTemp']);
+	grunt.registerTask('atr', ['clean:atrAll', 'jshint:atrFiles', 'concat:atrScripts', 'replace:atrPort', 'uglify:atrFiles', 'concat:atrLibs', 'concat:atrAll', 'cssmin:atrFiles', 'htmlmin:atrFiles', 'copy:atrIndex', 'copy:atrImages', 'clean:atrTemp']);
 }
