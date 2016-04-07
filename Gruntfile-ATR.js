@@ -76,13 +76,24 @@ module.exports = function (grunt) {
 	            dest: path_atr_webapp + 'js/app.min.js'
 	        }
 	    },
+		removeLoggingCalls: {
+        	atrFiles: path_atr_webapp + 'js/scripts.js',
+	        options: {
+	            methods: ['log', 'info', 'assert'], 
+
+	            strategy: function(consoleStatement) {
+	                return '';
+	            },
+	            removeSemicolonIfPossible: true
+	        }
+	    },
 		replace: {
 		  	atrPort: {
 		    	src: path_atr_webapp + 'js/scripts.js',
 		    	dest: path_atr_webapp + 'js/scripts.port.js',
 		    	replacements: [{
 		      		from: ':8080',
-		      		to: ''
+		      		to: ':8080'
 		    	}]
 		  	}
 		},
@@ -133,5 +144,5 @@ module.exports = function (grunt) {
 	    }
 	});
 
-	grunt.registerTask('atr', ['clean:atrAll', 'jshint:atrFiles', 'concat:atrScripts', 'replace:atrPort', 'uglify:atrFiles', 'concat:atrLibs', 'concat:atrAll', 'cssmin:atrFiles', 'htmlmin:atrFiles', 'copy:atrIndex', 'copy:atrImages', 'clean:atrTemp']);
+	grunt.registerTask('atr', ['clean:atrAll', 'jshint:atrFiles', 'concat:atrScripts', 'removeLoggingCalls:atrFiles', 'replace:atrPort', 'uglify:atrFiles', 'concat:atrLibs', 'concat:atrAll', 'cssmin:atrFiles', 'htmlmin:atrFiles', 'copy:atrIndex', 'copy:atrImages', 'clean:atrTemp']);
 }
