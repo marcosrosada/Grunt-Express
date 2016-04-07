@@ -8,14 +8,19 @@ module.exports = function (grunt) {
 			options: { force: true },
 	        mcdaAll: path_mcda_webapp,
 	        mcdaTemp: [ 
-        			path_mcda_webapp + 'js/scripts.js', 
+        			path_mcda_webapp + 'js/scripts.js',  
+        			path_mcda_webapp + 'js/scripts.port.js',
         			path_mcda_webapp + 'js/scripts.min.js', 
         			path_mcda_webapp + 'js/libs.min.js'
 				]
 	    },
 		jshint: {
         	mcdaFiles: {
-        		src: path_mcda_webdev + 'js/modules/*.js'
+        		src: [
+        			path_mcda_webdev + 'js/modules/*.js',
+        			path_mcda_webdev + 'js/services/**/*.js',
+        			path_mcda_webdev + 'js/controllers/**/*.js'
+        		]
         	}
 	    },
 	    concat: {
@@ -64,12 +69,25 @@ module.exports = function (grunt) {
 	            dest: path_mcda_webapp + 'js/app.min.js'
 	        }
 	    },
+	    replace: {
+		  	mcdaPort: {
+		    	src: path_mcda_webapp + 'js/scripts.js',
+		    	dest: path_mcda_webapp + 'js/scripts.port.js',
+		    	replacements: [{
+		      		from: ':8080',
+		      		to: ':8080'
+		    	}]
+		  	}
+		},
 	    uglify: {
 	    	options: {
-		      mangle: false
+		      mangle: false,
+		      compress: {
+		        drop_console: false
+		      }
 		    },
 	    	mcdaFiles: {
-	            src: [ path_mcda_webapp + 'js/scripts.js'],
+	            src: [ path_mcda_webapp + 'js/scripts.port.js'],
 	            dest: path_mcda_webapp + 'js/scripts.min.js'
 	        }
 	    },
@@ -108,5 +126,5 @@ module.exports = function (grunt) {
 	    }
 	});
 
-	grunt.registerTask('mcda', ['clean:mcdaAll', 'jshint:mcdaFiles', 'concat:mcdaScripts', 'uglify:mcdaFiles', 'concat:mcdaLibs', 'concat:mcdaAll', 'cssmin:mcdaFiles', 'htmlmin:mcdaFiles', 'copy:mcdaIndex', 'copy:mcdaImages', 'clean:mcdaTemp']);
+	grunt.registerTask('mcda', ['clean:mcdaAll', 'jshint:mcdaFiles', 'concat:mcdaScripts', 'replace:mcdaPort', 'uglify:mcdaFiles', 'concat:mcdaLibs', 'concat:mcdaAll', 'cssmin:mcdaFiles', 'htmlmin:mcdaFiles', 'copy:mcdaIndex', 'copy:mcdaImages', 'clean:mcdaTemp']);
 }
