@@ -69,13 +69,24 @@ module.exports = function (grunt) {
 	            dest: path_mcda_webapp + 'js/app.min.js'
 	        }
 	    },
+		removeLoggingCalls: {
+        	mcdaFiles: path_mcda_webapp + 'js/scripts.js',
+	        options: {
+	            methods: ['log', 'info', 'assert'], 
+
+	            strategy: function(consoleStatement) {
+	                return '';
+	            },
+	            removeSemicolonIfPossible: true
+	        }
+	    },
 	    replace: {
 		  	mcdaPort: {
 		    	src: path_mcda_webapp + 'js/scripts.js',
 		    	dest: path_mcda_webapp + 'js/scripts.port.js',
 		    	replacements: [{
 		      		from: ':8080',
-		      		to: ''
+		      		to: ':8080'
 		    	}]
 		  	}
 		},
@@ -126,5 +137,5 @@ module.exports = function (grunt) {
 	    }
 	});
 
-	grunt.registerTask('mcda', ['clean:mcdaAll', 'jshint:mcdaFiles', 'concat:mcdaScripts', 'replace:mcdaPort', 'uglify:mcdaFiles', 'concat:mcdaLibs', 'concat:mcdaAll', 'cssmin:mcdaFiles', 'htmlmin:mcdaFiles', 'copy:mcdaIndex', 'copy:mcdaImages', 'clean:mcdaTemp']);
+	grunt.registerTask('mcda', ['clean:mcdaAll', 'jshint:mcdaFiles', 'concat:mcdaScripts', 'removeLoggingCalls:mcdaFiles', 'replace:mcdaPort', 'uglify:mcdaFiles', 'concat:mcdaLibs', 'concat:mcdaAll', 'cssmin:mcdaFiles', 'htmlmin:mcdaFiles', 'copy:mcdaIndex', 'copy:mcdaImages', 'clean:mcdaTemp']);
 }
