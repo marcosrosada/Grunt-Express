@@ -1,9 +1,9 @@
 module.exports = function(grunt) {
 
-	var path_atr_webapp  = '../requisito/src/main/webapp/dist/',
-		path_atr_webdev  = '../requisito/src/main/webdev/',
-		path_mcda_webapp = '../mcda/src/main/webapp/dist/',
-		path_mcda_webdev = '../mcda/src/main/webdev/';
+	var path_atr_webapp  = '../ATR/trunk/src/main/webapp/',
+		path_atr_webdev  = '../ATR/trunk/src/main/webdev/',
+		path_mcda_webapp = '../mcda/trunk/src/main/webapp/',
+		path_mcda_webdev = '../mcda/trunk/src/main/webdev/';
 
 	require('./Gruntfile-ATR.js')(grunt);
 	require('./Gruntfile-MCDA.js')(grunt);
@@ -20,8 +20,8 @@ module.exports = function(grunt) {
 				options: {
 					port: 3000,
 					hostname: 'localhost',
-					//bases: [ path_atr_webdev, path_mcda_webdev ],
-					bases: [ path_atr_webapp, path_mcda_webapp ],
+					bases: [ path_atr_webdev, path_mcda_webdev ],
+					//bases: [ path_atr_webapp, path_mcda_webapp ],
 					livereload: true
 				}
 			}
@@ -41,5 +41,5 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-remove-logging-calls');
 
 	grunt.registerTask('server', ['express', 'watch']);
-	grunt.registerTask('prod', ['atr', 'mcda']);
+	grunt.registerTask('default', ['atr', 'mcda']);
 };
