@@ -1,12 +1,12 @@
 module.exports = function (grunt) {
 
-	var path_mcda_webapp = '../mcda/src/main/webapp/dist/mcda/',
-		path_mcda_webdev = '../mcda/src/main/webdev/mcda/';
+	var path_mcda_webapp = '../mcda/trunk/src/main/webapp/',
+		path_mcda_webdev = '../mcda/trunk/src/main/webdev/mcda/';
 
 	grunt.config.merge({
 		clean: {
-			options: { force: true },
-	        mcdaAll: path_mcda_webapp,
+			options: { force: true },			
+	        mcdaAll: [ path_mcda_webapp + '*', '!' + path_mcda_webapp + '/WEB-INF/**' ],
 	        mcdaTemp: [ 
         			path_mcda_webapp + 'js/scripts.js',  
         			path_mcda_webapp + 'js/scripts.port.js',
@@ -88,6 +88,14 @@ module.exports = function (grunt) {
 		      		from: ':8080',
 		      		to: ':8080'
 		    	}]
+		  	},
+		  	mcdaPathFonts: {
+		    	src: path_mcda_webapp + 'css/app.css',
+		    	dest: path_mcda_webapp + 'css/app.min.css',
+		    	replacements: [{
+		      		from: '../fonts',
+		      		to: 'fonts'
+		    	}]
 		  	}
 		},
 	    uglify: {
@@ -107,7 +115,7 @@ module.exports = function (grunt) {
 	            src: [
 	              path_mcda_webdev + 'css/**/**/*.css'
 	            ],
-	            dest: path_mcda_webapp + 'css/app.min.css'
+	            dest: path_mcda_webapp + 'css/app.css'
 	        }
 	    },
 	    htmlmin: {
@@ -133,9 +141,16 @@ module.exports = function (grunt) {
 	        	cwd: path_mcda_webdev + 'images/', 
 	        	src: ['**/*'], 
 	        	dest: path_mcda_webapp + 'images/'
+	        },
+	        mcdaFonts: {
+	        	expand: true,
+	        	flatten: false,
+	        	cwd: path_mcda_webdev + 'css/fonts/', 
+	        	src: ['**/*'], 
+	        	dest: path_mcda_webapp + 'css/fonts/'
 	        }
 	    }
 	});
 
-	grunt.registerTask('mcda', ['clean:mcdaAll', 'jshint:mcdaFiles', 'concat:mcdaScripts', 'removeLoggingCalls:mcdaFiles', 'replace:mcdaPort', 'uglify:mcdaFiles', 'concat:mcdaLibs', 'concat:mcdaAll', 'cssmin:mcdaFiles', 'htmlmin:mcdaFiles', 'copy:mcdaIndex', 'copy:mcdaImages', 'clean:mcdaTemp']);
+	grunt.registerTask('mcda', ['clean:mcdaAll', 'jshint:mcdaFiles', 'concat:mcdaScripts', 'removeLoggingCalls:mcdaFiles', 'replace:mcdaPort', 'uglify:mcdaFiles', 'concat:mcdaLibs', 'concat:mcdaAll', 'cssmin:mcdaFiles', 'replace:mcdaPathFonts', 'htmlmin:mcdaFiles', 'copy:mcdaIndex', 'copy:mcdaImages', 'copy:mcdaFonts', 'clean:mcdaTemp']);
 }
