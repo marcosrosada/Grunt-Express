@@ -22,6 +22,7 @@
     "grunt-contrib-uglify": "^1.0.1",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-express": "^1.4.1",
+    "grunt-remove-logging-calls": "^0.1.2",
     "grunt-text-replace": "^0.4.0"
   }
 }
