@@ -1,17 +1,18 @@
 module.exports = function (grunt) {
 
-	var path_atr_webapp = '../requisito/src/main/webapp/dist/atr/',
-		path_atr_webdev = '../requisito/src/main/webdev/atr/';
+	var path_atr_webapp = '../ATR/trunk/src/main/webapp/',
+		path_atr_webdev = '../ATR/trunk/src/main/webdev/atr/';
 
 	grunt.config.merge({
 		clean: {
 			options: { force: true },
-	        atrAll: path_atr_webapp,
+	        atrAll: [ path_atr_webapp + '*', '!' + path_atr_webapp + '/WEB-INF/**' ],
 	        atrTemp: [ 
         			path_atr_webapp + 'js/scripts.js', 
         			path_atr_webapp + 'js/scripts.port.js', 
         			path_atr_webapp + 'js/scripts.min.js', 
-        			path_atr_webapp + 'js/libs.min.js'
+        			path_atr_webapp + 'js/libs.min.js', 
+        			path_atr_webapp + 'css/app.css'
 				]
 	    },
 		jshint: {
@@ -95,6 +96,14 @@ module.exports = function (grunt) {
 		      		from: ':8080',
 		      		to: ':8080'
 		    	}]
+		  	},
+		  	atrPathFonts: {
+		    	src: path_atr_webapp + 'css/app.css',
+		    	dest: path_atr_webapp + 'css/app.min.css',
+		    	replacements: [{
+		      		from: '../fonts',
+		      		to: 'fonts'
+		    	}]
 		  	}
 		},
 	    uglify: {
@@ -114,7 +123,7 @@ module.exports = function (grunt) {
 	            src: [
 	              path_atr_webdev + 'css/**/**/*.css'
 	            ],
-	            dest: path_atr_webapp + 'css/app.min.css'
+	            dest: path_atr_webapp + 'css/app.css'
 	        }
 	    },
 	    htmlmin: {
@@ -140,9 +149,16 @@ module.exports = function (grunt) {
 	        	cwd: path_atr_webdev + 'image/', 
 	        	src: ['**/*'], 
 	        	dest: path_atr_webapp + 'image/'
+	        },
+	        atrFonts: {
+	        	expand: true,
+	        	flatten: false,
+	        	cwd: path_atr_webdev + 'css/fonts/', 
+	        	src: ['**/*'], 
+	        	dest: path_atr_webapp + 'css/fonts/'
 	        }
 	    }
 	});
 
-	grunt.registerTask('atr', ['clean:atrAll', 'jshint:atrFiles', 'concat:atrScripts', 'removeLoggingCalls:atrFiles', 'replace:atrPort', 'uglify:atrFiles', 'concat:atrLibs', 'concat:atrAll', 'cssmin:atrFiles', 'htmlmin:atrFiles', 'copy:atrIndex', 'copy:atrImages', 'clean:atrTemp']);
+	grunt.registerTask('atr', ['clean:atrAll', 'jshint:atrFiles', 'concat:atrScripts', 'removeLoggingCalls:atrFiles', 'replace:atrPort', 'uglify:atrFiles', 'concat:atrLibs', 'concat:atrAll', 'cssmin:atrFiles', 'replace:atrPathFonts', 'htmlmin:atrFiles', 'copy:atrIndex', 'copy:atrImages', 'copy:atrFonts','clean:atrTemp']);
 }
