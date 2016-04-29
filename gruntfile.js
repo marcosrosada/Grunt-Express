@@ -1,10 +1,7 @@
 module.exports = function(grunt) {
 
-	var path_atr_webapp  = '../ATR/trunk/src/main/webapp/',
-		path_atr_webdev  = '../ATR/trunk/src/main/webdev/',
-		path_mcda_webapp = '../mcda/trunk/src/main/webapp/',
-		path_mcda_webdev = '../mcda/trunk/src/main/webdev/';
-
+	require('./GruntConfig.js');
+	require('./Gruntfile-ACAT.js')(grunt);
 	require('./Gruntfile-ATR.js')(grunt);
 	require('./Gruntfile-MCDA.js')(grunt);
   
@@ -12,7 +9,27 @@ module.exports = function(grunt) {
 		
 		watch: {
 			options: { 
-				livereload : true 
+				livereload : false 
+			},
+			acatFiles: {
+				files: path_acat_webdev + 'acat/js/**/*.js',
+        		tasks: ['jshint:acatFiles']
+			},
+			atrFiles: {
+				files: [
+        			path_atr_webdev + 'atr/js/modules/**/*.js',
+        			path_atr_webdev + 'atr/js/controllers/**/*.js',
+        			path_atr_webdev + 'atr/js/services/**/*.js'
+        		],
+        		tasks: ['jshint:atrFiles']
+			},
+			mcdaFiles: {
+				files: [
+        			path_mcda_webdev + 'mcda/js/modules/**/*.js',
+        			path_mcda_webdev + 'mcda/js/controllers/**/*.js',
+        			path_mcda_webdev + 'mcda/js/services/**/*.js'
+        		],
+        		tasks: ['jshint:mcdaFiles']
 			}
 		},
 		express: {
@@ -20,9 +37,9 @@ module.exports = function(grunt) {
 				options: {
 					port: 3000,
 					hostname: 'localhost',
-					bases: [ path_atr_webdev, path_mcda_webdev ],
+					bases: [ path_acat_webdev, path_atr_webdev, path_mcda_webdev ],
 					//bases: [ path_atr_webapp, path_mcda_webapp ],
-					livereload: true
+					livereload: false
 				}
 			}
 		}
@@ -41,5 +58,5 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-remove-logging-calls');
 
 	grunt.registerTask('server', ['express', 'watch']);
-	grunt.registerTask('default', ['atr', 'mcda']);
+	grunt.registerTask('default', ['acat', 'atr', 'mcda']);
 };

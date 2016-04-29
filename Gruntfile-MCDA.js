@@ -1,7 +1,6 @@
 module.exports = function (grunt) {
 
-	var path_mcda_webapp = '../mcda/trunk/src/main/webapp/',
-		path_mcda_webdev = '../mcda/trunk/src/main/webdev/mcda/';
+	require('./GruntConfig');
 
 	grunt.config.merge({
 		clean: {
@@ -17,47 +16,47 @@ module.exports = function (grunt) {
 		jshint: {
         	mcdaFiles: {
         		src: [
-        			path_mcda_webdev + 'js/modules/*.js',
-        			path_mcda_webdev + 'js/services/**/*.js',
-        			path_mcda_webdev + 'js/controllers/**/*.js'
+        			path_mcda_webdev + '/mcda/js/modules/*.js',
+        			path_mcda_webdev + '/mcda/js/services/**/*.js',
+        			path_mcda_webdev + '/mcda/js/controllers/**/*.js'
         		]
         	}
 	    },
 	    concat: {
 	        mcdaScripts: {
             	src: [ 
-						path_mcda_webdev + 'js/modules/app.js', 
-						path_mcda_webdev + 'js/services/**/*.js',
-						path_mcda_webdev + 'js/controllers/**/*.js'
+						path_mcda_webdev + '/mcda/js/modules/app.js', 
+						path_mcda_webdev + '/mcda/js/services/**/*.js',
+						path_mcda_webdev + '/mcda/js/controllers/**/*.js'
             		],
             	dest: path_mcda_webapp + 'js/scripts.js'
 	        },
 	        mcdaLibs: {
             	src: [ 
-            			path_mcda_webdev + 'js/jquery/jquery-1.10.2.min.js',
-						path_mcda_webdev + 'js/jquery/jquery.easing.min.js',
+            			path_mcda_webdev + '/mcda/js/jquery/jquery-1.10.2.min.js',
+						path_mcda_webdev + '/mcda/js/jquery/jquery.easing.min.js',
 
 						
-						path_mcda_webdev + 'js/angular/angular.min.js',
-						path_mcda_webdev + 'js/angular/angular-route.js',
-						path_mcda_webdev + 'js/angular/angular-resource.js',
-						path_mcda_webdev + 'js/angular/angular-animate.js',
-						path_mcda_webdev + 'js/angular/angular-highlightjs.js',
-						path_mcda_webdev + 'js/angular/angular-touch.min.js',
-						path_mcda_webdev + 'js/angular/angular-sanitize.js',
-						path_mcda_webdev + 'js/angular/angularjs-dropdown-multiselect.js',
+						path_mcda_webdev + '/mcda/js/angular/angular.min.js',
+						path_mcda_webdev + '/mcda/js/angular/angular-route.js',
+						path_mcda_webdev + '/mcda/js/angular/angular-resource.js',
+						path_mcda_webdev + '/mcda/js/angular/angular-animate.js',
+						path_mcda_webdev + '/mcda/js/angular/angular-highlightjs.js',
+						path_mcda_webdev + '/mcda/js/angular/angular-touch.min.js',
+						path_mcda_webdev + '/mcda/js/angular/angular-sanitize.js',
+						path_mcda_webdev + '/mcda/js/angular/angularjs-dropdown-multiselect.js',
 						
 						
-						path_mcda_webdev + 'js/libs/lodash.min.js',
-						path_mcda_webdev + 'js/libs/highlight.min.js',
-						path_mcda_webdev + 'js/libs/ngDialog.min.js',
-						path_mcda_webdev + 'js/libs/angular-input-masks/masks.js',
-						path_mcda_webdev + 'js/libs/angular-locale_pt-br.js',
-						path_mcda_webdev + 'js/libs/toaster.js',
+						path_mcda_webdev + '/mcda/js/libs/lodash.min.js',
+						path_mcda_webdev + '/mcda/js/libs/highlight.min.js',
+						path_mcda_webdev + '/mcda/js/libs/ngDialog.min.js',
+						path_mcda_webdev + '/mcda/js/libs/angular-input-masks/masks.js',
+						path_mcda_webdev + '/mcda/js/libs/angular-locale_pt-br.js',
+						path_mcda_webdev + '/mcda/js/libs/toaster.js',
 						
 						
-						path_mcda_webdev + 'js/bootstrap/ui-bootstrap-tpls.js',
-						path_mcda_webdev + 'js/bootstrap/bootstrap.min.js',
+						path_mcda_webdev + '/mcda/js/bootstrap/ui-bootstrap-tpls.js',
+						path_mcda_webdev + '/mcda/js/bootstrap/bootstrap.min.js',
             		],
             	dest: path_mcda_webapp + 'js/libs.min.js'
 	        },
@@ -86,7 +85,7 @@ module.exports = function (grunt) {
 		    	dest: path_mcda_webapp + 'js/scripts.port.js',
 		    	replacements: [{
 		      		from: ':8080',
-		      		to: ':8080'
+		      		to: ''
 		    	}]
 		  	},
 		  	mcdaPathFonts: {
@@ -113,7 +112,7 @@ module.exports = function (grunt) {
 	    cssmin: {
 	        mcdaFiles: {
 	            src: [
-	              path_mcda_webdev + 'css/**/**/*.css'
+	              path_mcda_webdev + '/mcda/css/**/**/*.css'
 	            ],
 	            dest: path_mcda_webapp + 'css/app.css'
 	        }
@@ -125,27 +124,27 @@ module.exports = function (grunt) {
 		          collapseWhitespace: true
 		        },
 	            expand: true,
-	            cwd: path_mcda_webdev + 'views/',
+	            cwd: path_mcda_webdev + '/mcda/views/',
 	            src: ['**/*.html'],
 	            dest: path_mcda_webapp + 'views'
 	    	}
 	    },
 	    copy: {
 	        mcdaIndex: {
-	            src: path_mcda_webdev + 'index-prod.html',
+	            src: path_mcda_webdev + '/mcda/index-prod.html',
 	            dest: path_mcda_webapp + 'index.html'
 	        },
 	        mcdaImages: {
 	        	expand: true,
 	        	flatten: false,
-	        	cwd: path_mcda_webdev + 'images/', 
+	        	cwd: path_mcda_webdev + '/mcda/images/', 
 	        	src: ['**/*'], 
 	        	dest: path_mcda_webapp + 'images/'
 	        },
 	        mcdaFonts: {
 	        	expand: true,
 	        	flatten: false,
-	        	cwd: path_mcda_webdev + 'css/fonts/', 
+	        	cwd: path_mcda_webdev + '/mcda/css/fonts/', 
 	        	src: ['**/*'], 
 	        	dest: path_mcda_webapp + 'css/fonts/'
 	        }
